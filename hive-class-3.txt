@@ -1,1 +1,44 @@
+# first load data as csv in /tmp/hive/
 
+# creating directory in hive directory
+mkdir hive_class
+
+#already exist somewhere you can move using
+mv ./sales_data.csv /tmp/hive/hive_class
+
+#create table in hive
+create table sales_data_v2
+    (
+    p_type string,
+    total_sales int
+    )
+    row format delimited
+    fields terminated by ',';
+    
+    
+#load csv(local)  file into hive table
+load data inpath 'file:///tmp/hive_class/sales_data.csv' into table sales_data_v2;
+
+#command to create identical table
+create table sales_data_v2_bkup as select * from sales_data_v2;
+
+# describe command for a table
+describe extended sales_data_v2;
+describe formatted sales_data_v2;
+describe sales_data_v2;
+
+#create table which will store data in parquet
+
+create table sales_data_pq_final
+(
+  product_type string,
+  total_Sales int
+  )
+  stored as parquet;
+)
+
+
+
+
+#load data in parquet table
+from sales_data_v2 insert overwrite table sales_data_pq select *;
