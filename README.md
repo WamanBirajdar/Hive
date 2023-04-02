@@ -12,6 +12,7 @@
 + Serialization and Deserialization
 
 ### Day 4
+- SerDe example (CSV,JSON)
 + Partitioning
 + Bucketing
 
